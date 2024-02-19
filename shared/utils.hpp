@@ -2,24 +2,25 @@
 
 #include <string>
 #include <unordered_set>
-#include "modloader/shared/modloader.hpp"
+#include "_config.h"
+#include "scotland2/shared/loader.hpp"
 
 namespace bs_utils {
     /// @brief Returns a path to the persistent data directory for the provided const ModInfo&.
     /// PLEASE USE beatsaber-hook's VERSION OF THIS FUNCTION INSTEAD! SEE config-utils.hpp
     /// @param info The const ModInfo& to find a path for.
     /// @return The path to the directory.
-    std::string getDataDir(const ModInfo& info);
+    BS_UTILS_EXPORT std::string getDataDir(const modloader::ModInfo& info);
 
     /// @struct Information about the mod that is currentlying disabling score submission
-    struct DisablingModInfo {
+    struct BS_UTILS_EXPORT DisablingModInfo {
         // Id of the mod disabling
         std::string id;
         // Version of the mod disabling
         std::string version;
         /// @brief Construct a new disabling mod info from a ModInfo&
         /// @param info The ModInfo& to construct this from
-        DisablingModInfo(const ModInfo& info) {
+        DisablingModInfo(const modloader::ModInfo& info) {
             id = info.id;
             version = info.version;
         }
@@ -30,7 +31,7 @@ namespace bs_utils {
         }
     };
     /// @class Hash function for DisablingModInfos so it can be used in a map.
-    class DisablingModInfoHash
+    class BS_UTILS_EXPORT DisablingModInfoHash
     {
         public:
             size_t operator()(const DisablingModInfo& info) const {
@@ -39,14 +40,14 @@ namespace bs_utils {
         private:
             std::hash<std::string> strHasher;
     };
-    class Submission {
+    class BS_UTILS_EXPORT Submission {
         public:
             /// @brief Disable score submission for the provided ModInfo&.
             /// @param info ModInfo& to disable score under.
-            static void disable(const ModInfo& info);
+            static void disable(const modloader::ModInfo& info);
             /// @brief Enable score submission for the provided ModInfo&.
             /// @param info ModInfo& to enable score under.
-            static void enable(const ModInfo& info);
+            static void enable(const modloader::ModInfo& info);
             /// @brief Get a set of all mods currently disabling score submission.
             /// @return The const unordered_set of DisablingModInfos
             static const std::unordered_set<DisablingModInfo, DisablingModInfoHash> getDisablingMods();

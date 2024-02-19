@@ -9,20 +9,29 @@
     "additionalData": {
       "soLink": "https://github.com/sc2ad/QuestBS-Utils/releases/download/v0.3.3/libbs-utils_0_3_3.so",
       "debugSoLink": "https://github.com/sc2ad/QuestBS-Utils/releases/download/v0.3.3/debug_libbs-utils_0_3_3.so",
-      "overrideSoName": "libbs-utils.so"
+      "overrideSoName": "libbs-utils.so",
+      "cmake": true
     }
   },
   "dependencies": [
     {
       "id": "beatsaber-hook",
-      "versionRange": "^3.6.0",
+      "versionRange": "^5.0.0",
       "additionalData": {}
     },
     {
-      "id": "modloader",
-      "versionRange": "^1.2.3",
+      "id": "scotland2",
+      "versionRange": "^0.1.4",
       "additionalData": {}
     }
   ],
-  "additionalData": {}
+  "workspace": {
+    "scripts": {
+      "qmod": [
+        "pwsh ./build.ps1",
+        "qpm qmod build --isLibrary true",
+        "pwsh ./createqmod.ps1 BS-Utils"
+      ]
+    }
+  }
 }
