@@ -9,4 +9,6 @@
 #define VERSION "0.0.0"
 #endif
 
-Logger& getLogger();
+namespace BSUtils {
+    constexpr static auto logger = Paper::ConstLoggerContext("BS-Utils");
+}

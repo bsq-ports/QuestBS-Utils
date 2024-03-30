@@ -10,7 +10,7 @@
 #include <mutex>
 
 #ifndef PERSISTENT_DIR
-#define PERSISTENT_DIR "/sdcard/ModData/%s/Mods/%s/"
+#define PERSISTENT_DIR "/sdcard/ModData/{}/Mods/{}/"
 #endif
 
 static std::mutex submissionMutex;
@@ -19,16 +19,16 @@ static std::mutex enabledMutex;
 
 MAKE_HOOK_FIND_CLASS_UNSAFE_STATIC (LevelCompletionResultsHelper_ProcessScore, "", "LevelCompletionResultsHelper", "ProcessScore", void, Il2CppObject* playerData, Il2CppObject* playerLevelStats, Il2CppObject* levelCompletionResults, Il2CppObject* transformedBeatmapData, Il2CppObject* difficultyBeatmap, Il2CppObject* platformLeaderboardsModel) {
     if (!bs_utils::Submission::getEnabled()) {
-        getLogger().debug("Blocking vanilla score processing!");
+        BSUtils::logger.debug("Blocking vanilla score processing!");
         return;
     }
-    getLogger().debug("Allowing vanilla score processing!");
+    BSUtils::logger.debug("Allowing vanilla score processing!");
     LevelCompletionResultsHelper_ProcessScore(playerData, playerLevelStats, levelCompletionResults, transformedBeatmapData, difficultyBeatmap, platformLeaderboardsModel);
 }
 
 namespace bs_utils {
     std::string getDataDir(const modloader::ModInfo& info) {
-        auto path = string_format(PERSISTENT_DIR, modloader::get_application_id().c_str(), info.id.c_str());
+        auto path = fmt::format(PERSISTENT_DIR, modloader::get_application_id(), info.id);
         mkpath(path);
         return path;
     }
@@ -40,7 +40,7 @@ namespace bs_utils {
     void Submission::init() {
         if (!initialized) {
             initMutex.lock();
-            INSTALL_HOOK_ORIG(getLogger(), LevelCompletionResultsHelper_ProcessScore);
+            INSTALL_HOOK_ORIG(BSUtils::logger, LevelCompletionResultsHelper_ProcessScore);
             initialized = true;
             initMutex.unlock();
         }
@@ -57,7 +57,7 @@ namespace bs_utils {
             submissionMutex.unlock();
             // Re-enable score submission
             enabledMutex.lock();
-            getLogger().info("Mod: %s is enabling score submission!", info.id.c_str());
+            BSUtils::logger.info("Mod: %s is enabling score submission!", info.id.c_str());
             setenv("disable_ss_upload", "0", true);
             enabled = true;
             enabledMutex.unlock();
@@ -71,7 +71,7 @@ namespace bs_utils {
         if (disablingMods.find(info) != disablingMods.end()) {
             submissionMutex.unlock();
             // Don't disable again if this mod has already disabled it once.
-            getLogger().info("Mod: %s is disabling score submission multiple times!", info.id.c_str());
+            BSUtils::logger.info("Mod: %s is disabling score submission multiple times!", info.id.c_str());
             return;
         }
         disablingMods.insert(info);
@@ -79,7 +79,7 @@ namespace bs_utils {
         if (enabled) {
             // Disable score submission
             enabledMutex.lock();
-            getLogger().info("Mod: %s is disabling score submission!", info.id.c_str());
+            BSUtils::logger.info("Mod: %s is disabling score submission!", info.id.c_str());
             setenv("disable_ss_upload", "1", true);
             // this will also disable vanilla score submission via main.cpp
             enabled = false;

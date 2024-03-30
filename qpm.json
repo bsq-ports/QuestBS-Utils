@@ -1,4 +1,5 @@
 {
+  "version": "0.1.0",
   "sharedDir": "shared",
   "dependenciesDir": "extern",
   "info": {
@@ -13,6 +14,15 @@
       "cmake": true
     }
   },
+  "workspace": {
+    "scripts": {
+      "qmod": [
+        "pwsh ./build.ps1",
+        "qpm qmod build --isLibrary true",
+        "pwsh ./createqmod.ps1 BS-Utils"
+      ]
+    }
+  },
   "dependencies": [
     {
       "id": "beatsaber-hook",
@@ -23,15 +33,11 @@
       "id": "scotland2",
       "versionRange": "^0.1.4",
       "additionalData": {}
+    },
+    {
+      "id": "paper",
+      "versionRange": "^3.6.3",
+      "additionalData": {}
     }
-  ],
-  "workspace": {
-    "scripts": {
-      "qmod": [
-        "pwsh ./build.ps1",
-        "qpm qmod build --isLibrary true",
-        "pwsh ./createqmod.ps1 BS-Utils"
-      ]
-    }
-  }
+  ]
 }
