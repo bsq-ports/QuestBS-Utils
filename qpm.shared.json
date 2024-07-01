@@ -19,10 +19,13 @@
       "scripts": {
         "qmod": [
           "pwsh ./build.ps1",
-          "qpm qmod build --isLibrary true",
+          "qpm qmod manifest",
           "pwsh ./createqmod.ps1 BS-Utils"
         ]
-      }
+      },
+      "qmodIncludeDirs": [],
+      "qmodIncludeFiles": [],
+      "qmodOutput": null
     },
     "dependencies": [
       {
@@ -66,25 +69,26 @@
     {
       "dependency": {
         "id": "libil2cpp",
-        "versionRange": "=0.3.1",
+        "versionRange": "=0.3.2",
         "additionalData": {
-          "headersOnly": true
+          "headersOnly": true,
+          "cmake": false
         }
       },
-      "version": "0.3.1"
+      "version": "0.3.2"
     },
     {
       "dependency": {
         "id": "beatsaber-hook",
-        "versionRange": "=5.1.6",
+        "versionRange": "=5.1.8",
         "additionalData": {
-          "soLink": "https://github.com/QuestPackageManager/beatsaber-hook/releases/download/v5.1.6/libbeatsaber-hook_5_1_6.so",
-          "debugSoLink": "https://github.com/QuestPackageManager/beatsaber-hook/releases/download/v5.1.6/debug_libbeatsaber-hook_5_1_6.so",
-          "branchName": "version/v5_1_6",
+          "soLink": "https://github.com/QuestPackageManager/beatsaber-hook/releases/download/v5.1.8/libbeatsaber-hook_5_1_8.so",
+          "debugSoLink": "https://github.com/QuestPackageManager/beatsaber-hook/releases/download/v5.1.8/debug_libbeatsaber-hook_5_1_8.so",
+          "branchName": "version/v5_1_8",
           "cmake": true
         }
       },
-      "version": "5.1.6"
+      "version": "5.1.8"
     },
     {
       "dependency": {

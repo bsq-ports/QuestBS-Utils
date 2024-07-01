@@ -18,7 +18,7 @@
     "scripts": {
       "qmod": [
         "pwsh ./build.ps1",
-        "qpm qmod build --isLibrary true",
+        "qpm qmod manifest",
         "pwsh ./createqmod.ps1 BS-Utils"
       ]
     }
