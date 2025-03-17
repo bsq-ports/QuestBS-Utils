@@ -23,6 +23,7 @@
           "pwsh ./createqmod.ps1 BS-Utils"
         ]
       },
+      "ndk": "^27.2.12479018",
       "qmodIncludeDirs": [],
       "qmodIncludeFiles": [],
       "qmodOutput": null
